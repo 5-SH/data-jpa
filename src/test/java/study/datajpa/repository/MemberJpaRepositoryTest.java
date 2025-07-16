@@ -1,28 +1,27 @@
-package study.data_jpa.repository;
+package study.datajpa.repository;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
-import study.data_jpa.entity.Member;
+import study.datajpa.entity.Member;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
 @Rollback(false)
-class MemberRepositoryTest {
+class MemberJpaRepositoryTest {
 
-    @Autowired MemberRepository memberRepository;
+    @Autowired MemberJpaRepository memberJpaRepository;
 
     @Test
     public void testMember() {
         Member member = new Member("memberA");
-        Member savedMember = memberRepository.save(member);
+        Member savedMember = memberJpaRepository.save(member);
 
-        Member findMember = memberRepository.findById(savedMember.getId()).get();
+        Member findMember = memberJpaRepository.find(savedMember.getId());
 
         assertThat(findMember.getId()).isEqualTo(member.getId());
         assertThat(findMember.getUsername()).isEqualTo(member.getUsername());
